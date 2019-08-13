@@ -1,16 +1,17 @@
 import { GraphQLDateTime } from 'graphql-iso-date'
-import { chats, messages } from '../db'
+import { chats, messages, Message } from '../db'
+import { Resolvers } from '../types/graphql'
 
-const resolvers = {
+const resolvers: Resolvers = {
   Date: GraphQLDateTime,
 
   Chat: {
-    messages(chat: any) {
+    messages(chat) {
       return messages.filter(m => chat.messages.includes(m.id))
     },
-    lastMessage(chat: any) {
+    lastMessage(chat) {
       const lastMessage = chat.messages[chat.messages.length - 1]
-      return messages.find(m => m.id === lastMessage)
+      return messages.find(m => m.id === lastMessage) || null
     },
   },
 
@@ -18,13 +19,13 @@ const resolvers = {
     chats() {
       return chats
     },
-    chat(root: any, { chatId }: any) {
-      return chats.find(c => c.id === chatId)
+    chat(root, { chatId }) {
+      return chats.find(c => c.id === chatId) || null
     },
   },
 
   Mutation: {
-    addMessage(root: any, { chatId, content }: any) {
+    addMessage(root, { chatId, content }) {
       const chatIndex = chats.findIndex(c => c.id === chatId)
 
       if (chatIndex === -1) return null
@@ -35,7 +36,7 @@ const resolvers = {
         Number(currentMessage.id)
       )
       const messageId = String(Math.max(...messagesIds) + 1)
-      const message = {
+      const message: Message = {
         id: messageId,
         createdAt: new Date(),
         content,
