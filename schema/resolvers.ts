@@ -7,10 +7,10 @@ import { Resolvers } from '../types/graphql'
 import { secret, expiration } from '../env'
 import { validateLength, validatePassword } from '../validators'
 import sql from 'sql-template-strings'
-import axios from 'axios'
-import { RandomPhoto } from '../types/unsplash'
-import { trackProvider } from '@safe-api/middleware'
-import { resolve } from 'path'
+// import axios from 'axios'
+// import { RandomPhoto } from '../types/unsplash'
+// import { trackProvider } from '@safe-api/middleware'
+// import { resolve } from 'path'
 
 const resolvers: Resolvers = {
   Date: GraphQLDateTime,
@@ -61,7 +61,7 @@ const resolvers: Resolvers = {
       return participant ? participant.name : null
     },
 
-    async picture(chat, args, { currentUser, db }) {
+    async picture(chat, args, { currentUser, db, dataSources }) {
       if (!currentUser) return null
       const { rows } = await db.query(sql`
         SELECT users.* FROM users, chats_users
@@ -70,57 +70,9 @@ const resolvers: Resolvers = {
         AND chats_users.chat_id = ${chat.id}
       `)
       const participant = rows[0]
-      if (participant && participant.picture) return participant.picture
-
-      interface RandomPhotoInput {
-        query: string
-        orientation: 'landscape' | 'portrait' | 'squarish'
-      }
-
-      const trackedRandomPhoto = await trackProvider(
-        async ({ query, orientation }: RandomPhotoInput) =>
-          (await axios.get<RandomPhoto>(
-            'https://api.unsplash.com/photos/random',
-            {
-              params: {
-                query,
-                orientation,
-              },
-              headers: {
-                Authorization:
-                  'Client-ID 4d048cfb4383b407eff92e4a2a5ec36c0a866be85e64caafa588c110efad350d',
-              },
-            }
-          )).data,
-        {
-          provider: 'Unsplash',
-          method: 'RandomPhoto',
-          location: resolve(__dirname, '../logs/main'),
-        }
-      )
-
-      try {
-        // return (await axios.get<RandomPhoto>(
-        //   'https://api.unsplash.com/photos/random',
-        //   {
-        //     params: {
-        //       query: 'portrait',
-        //       orientation: 'squarish',
-        //     },
-        //     headers: {
-        //       Authorization:
-        //         'Client-ID 4d048cfb4383b407eff92e4a2a5ec36c0a866be85e64caafa588c110efad350d',
-        //     },
-        //   }
-        // )).data.urls.small
-        return (await trackedRandomPhoto({
-          query: 'portrait',
-          orientation: 'squarish',
-        })).urls.small
-      } catch (err) {
-        console.error('Cannot retrieve random photo:', err)
-        return null
-      }
+      return participant && participant.picture
+        ? participant.picture
+        : dataSources.unsplashApi.getRandomPhoto()
     },
 
     async messages(chat, args, { db }) {
