@@ -2,7 +2,7 @@ import { ApolloServer } from 'apollo-server-express'
 import http from 'http'
 import jwt from 'jsonwebtoken'
 import cookie from 'cookie'
-import schema from './schema'
+// import schema from './schema'
 import { pool } from './db'
 import { app } from './app'
 import { origin, port, secret } from './env'
@@ -10,6 +10,9 @@ import { MyContext } from './context'
 import sql from 'sql-template-strings'
 const { PostgresPubSub } = require('graphql-postgres-subscriptions')
 import { UnsplashApi } from './schema/unsplash.api'
+import * as commonModule from './modules/common'
+import * as usersModule from './modules/users'
+import * as chatsModule from './modules/chats'
 
 const pubsub = new PostgresPubSub({
   host: 'localhost',
@@ -20,7 +23,7 @@ const pubsub = new PostgresPubSub({
 })
 
 const server = new ApolloServer({
-  schema,
+  modules: [commonModule, usersModule, chatsModule] as any,
   context: async (session: any) => {
     let req = session.connection
       ? session.connection.context.request
