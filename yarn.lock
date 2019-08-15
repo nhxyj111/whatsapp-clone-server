@@ -201,6 +201,24 @@
   dependencies:
     dependency-graph "0.8.0"
 
+"@graphql-modules/core@^0.7.9":
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/@graphql-modules/core/-/core-0.7.9.tgz#3eb2e83a7d26634b57b2f404403138ee259a5369"
+  integrity sha512-+Q6X09YETPRkpp10IKbhqgg+Crb5Te/VoNZSoELn27WS7ZiNftdMNwQrmCK7GrybKXUlNpqjcHDC7+LGWENnBw==
+  dependencies:
+    "@graphql-modules/di" "0.7.9"
+    apollo-server-caching "0.5.0"
+    graphql-toolkit "0.5.0"
+    tslib "1.10.0"
+
+"@graphql-modules/di@0.7.9":
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/@graphql-modules/di/-/di-0.7.9.tgz#4494fba7e2bd381de31c5e7773086c70f3bc7dbb"
+  integrity sha512-ZQ4DkbKfrhyqyV1lnt5SGYvPmhes71175Net/tqipm29B7kxflfHkJe4HzAX6aOc13SsDUfFM/7OT8678ZaHnw==
+  dependencies:
+    events "3.0.0"
+    tslib "1.10.0"
+
 "@kamilkisiela/graphql-tools@4.0.6":
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/@kamilkisiela/graphql-tools/-/graphql-tools-4.0.6.tgz#6dcf4d18bedaf34f6ab1d5bad2414e530d0875d1"
@@ -1453,6 +1471,11 @@ eventemitter3@^3.1.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
+events@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/events/-/events-3.0.0.tgz#9a0a0dfaf62893d92b875b8f2698ca4114973e88"
+  integrity sha512-Dc381HFWJzEOhQ+d8pkNon++bk9h6cdAoAj4iE6Q4y6xgTzySWXlKn05/TVNpjnfRqi/X0EpJEJohPjNI3zpVA==
+
 express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
@@ -1786,6 +1809,25 @@ graphql-tag@2.10.1, graphql-tag@^2.9.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
+
+graphql-toolkit@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/graphql-toolkit/-/graphql-toolkit-0.5.0.tgz#7371c21809898286b2a9e164b45469586cf64498"
+  integrity sha512-tBgqyWPHI/Pgt+jp+uLZZy2EBCzjd6yWAu73oUlmrhgg7XM6f1ONotVHvIO2MK7j8khR+ex/cUe8FgpS1i845w==
+  dependencies:
+    "@kamilkisiela/graphql-tools" "4.0.6"
+    "@types/glob" "7.1.1"
+    aggregate-error "3.0.0"
+    asyncro "^3.0.0"
+    cross-fetch "^3.0.4"
+    deepmerge "4.0.0"
+    glob "7.1.4"
+    graphql-import "0.7.1"
+    is-glob "4.0.1"
+    is-valid-path "0.1.1"
+    lodash "4.17.15"
+    tslib "^1.9.3"
+    valid-url "1.0.9"
 
 graphql-toolkit@0.5.4:
   version "0.5.4"
